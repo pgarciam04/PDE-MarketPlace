@@ -249,5 +249,6 @@ Aquí es donde apliqué la persistencia de datos. Monté una base de datos con R
 
 ### Autenticación y procesos en segundo plano (Unidad 2)
 Para el login y registro de usuarios, integré Firebase Authentication. Lo importante aquí fue asegurarme de que todas estas operaciones de red se ejecutaran sin bloquear la interfaz, porque no hay nada peor que una app que se congela mientras esperas.
-Optimización y extras (Unidades 5 y 6)
 
+### Optimización y extras (Unidades 5 y 6)
+Para que la app vaya fluida y no se coma toda la memoria del móvil pensé en añadir funciones con mapas, para seleccionar direcciones de envío o localizar tiendas cercanas
