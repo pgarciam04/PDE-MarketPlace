@@ -236,3 +236,9 @@ classDiagram
 ```
 
 #### Diagrama para verlo en Github 
+
+
+
+## Explicación del trabajo para la presentación:
+
+
