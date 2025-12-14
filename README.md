@@ -182,16 +182,16 @@ classDiagram
     }
 
     %% Definición de Clases Anidadas (Inner Classes)
-    class ProductAdapter$ProductViewHolder {
+    class ProductAdapter_ProductViewHolder {
         ~ ImageView ivImage
         ~ TextView tvName
     }
     
-    class OrdersAdapter$OrderViewHolder {
+    class OrdersAdapter_OrderViewHolder {
         ~ TextView tvOrderItems
     }
 
-    class CartAdapter$CartViewHolder {
+    class CartAdapter_CartViewHolder {
         ~ ImageView ivImage
         ~ TextView tvName
     }
@@ -203,11 +203,11 @@ classDiagram
     AppCompatActivity <|-- AccountActivity
     AppCompatActivity <|-- HomeActivity
     Adapter <|-- ProductAdapter
-    ViewHolder <|-- ProductAdapter$ProductViewHolder
+    ViewHolder <|-- ProductAdapter_ProductViewHolder
     Adapter <|-- OrdersAdapter
-    ViewHolder <|-- OrdersAdapter$OrderViewHolder
+    ViewHolder <|-- OrdersAdapter_OrderViewHolder
     Adapter <|-- CartAdapter
-    ViewHolder <|-- CartAdapter$CartViewHolder
+    ViewHolder <|-- CartAdapter_CartViewHolder
     AppCompatActivity <|-- MainActivity
     RoomDatabase <|-- AppDatabase
     AppCompatActivity <|-- ProductDetailActivity
@@ -215,9 +215,9 @@ classDiagram
     AppCompatActivity <|-- OrdersActivity
 
     %% Relaciones de Anidación/Composición (Mermaid: *--)
-    ProductAdapter *-- ProductAdapter$ProductViewHolder
-    OrdersAdapter *-- OrdersAdapter$OrderViewHolder
-    CartAdapter *-- CartAdapter$CartViewHolder
+    ProductAdapter *-- ProductAdapter_ProductViewHolder
+    OrdersAdapter *-- OrdersAdapter_OrderViewHolder
+    CartAdapter *-- CartAdapter_CartViewHolder
 
     %% Relaciones de Interfaces (Implementación)
     CartItemDao <|.. AppDatabase
