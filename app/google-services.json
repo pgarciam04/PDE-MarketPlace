@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "485523805750",
+    "project_id": "pde-marketplace",
+    "storage_bucket": "pde-marketplace.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485523805750:android:23f0ccf3255c399a14aa97",
+        "android_client_info": {
+          "package_name": "com.example.pde_marketplace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJAKd-UdZL84pppOwSxGC-bBalUUOeEC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
