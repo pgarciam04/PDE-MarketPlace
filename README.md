@@ -241,4 +241,13 @@ classDiagram
 
 ## Explicación del trabajo para la presentación:
 
+### Interfaces y navegación ( Unidades 1 y 4)
+Empecé montando las pantallas básicas: el home, el carrito, login, registro y los pedidos. Cada una es una Activity que maneja su propio ciclo de vida. Para mostrar las listas de productos, pedidos y el carrito, he usado adaptadores personalizados (ProductAdapter, OrdersAdapter y CartAdapter) que se encargan de renderizar todo de forma fluida.
+
+### Base de datos local (Unidad 3)
+Aquí es donde apliqué la persistencia de datos. Monté una base de datos con Room que incluye DAOs para gestionar los items del carrito y los pedidos. También creé una clase Repository que centraliza todo el acceso a datos, así el código queda mucho más limpio y organizado.
+
+### Autenticación y procesos en segundo plano (Unidad 2)
+Para el login y registro de usuarios, integré Firebase Authentication. Lo importante aquí fue asegurarme de que todas estas operaciones de red se ejecutaran sin bloquear la interfaz, porque no hay nada peor que una app que se congela mientras esperas.
+Optimización y extras (Unidades 5 y 6)
 
