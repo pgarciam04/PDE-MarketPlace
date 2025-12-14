@@ -231,4 +231,4 @@ classDiagram
     RegisterActivity --> FirebaseAuthManager
 ```
 
-
+#### Diagrama para verlo en Github 
