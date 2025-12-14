@@ -1,3 +1,7 @@
+# Link al repositorio de Github (Visualización sencilla del diagrama diagrama.puml)
+
+https://github.com/pgarciam04/PDE-MarketPlace.git
+
 ## Diagrama de Clases de la Aplicación del marketplace
 
 ```mermaid
