@@ -1,4 +1,5 @@
 ## Diagrama de Clases de la Aplicación del marketplace
+
 ```mermaid
 classDiagram
     direction LR
@@ -117,10 +118,10 @@ classDiagram
 
     class AppDatabase {
         <<abstract>>
-        - {static} AppDatabase INSTANCE
-        + {abstract}CartItemDao cartItemDao()
-        + {abstract}OrderDao orderDao()
-        + {static} AppDatabase getInstance(Context)
+        - AppDatabase INSTANCE$
+        + CartItemDao cartItemDao()*
+        + OrderDao orderDao()*
+        + AppDatabase getInstance(Context)$
     }
     
     class CartItemDao {
@@ -154,11 +155,11 @@ classDiagram
         - TextView tvName
         - ImageView ivImage
         - Button btnAdd
-        - {static} ArrayList<CartItem> cart
+        - ArrayList<CartItem> cart$
         # void onCreate(Bundle)
         + boolean onSupportNavigateUp()
-        + {static} ArrayList<CartItem> getCartItems()
-        + {static} void clearCart()
+        + ArrayList<CartItem> getCartItems()$
+        + void clearCart()$
     }
     
     class Constants {
@@ -174,14 +175,13 @@ classDiagram
     class OrdersActivity {
         - RecyclerView recyclerView
         - OrdersAdapter adapter
-        - {static} List<List<CartItem>> orderHistory
+        - List<List<CartItem>> orderHistory$
         # void onCreate(Bundle)
         + boolean onOptionsItemSelected(MenuItem)
-        + {static} void saveOrder(List<CartItem>)
+        + void saveOrder(List<CartItem>)$
     }
 
     %% Definición de Clases Anidadas (Inner Classes)
-    ' En PlantUML es +.. , en Mermaid se usa 'y tiene' *-- 'para composición' o la notación de clase anidada. Usaremos la notación de PlantUML con la clase anidada para claridad.
     class ProductAdapter$ProductViewHolder {
         ~ ImageView ivImage
         ~ TextView tvName
@@ -197,8 +197,6 @@ classDiagram
     }
 
     %% Relaciones de Herencia (Generalización) y Implementación
-    
-    ' Herencia (extends) en PlantUML es <|--, en Mermaid es <|-- o <|..
     
     AppCompatActivity <|-- CartActivity
     AppCompatActivity <|-- LoginActivity
@@ -216,12 +214,9 @@ classDiagram
     AppCompatActivity <|-- RegisterActivity
     AppCompatActivity <|-- OrdersActivity
 
-    %% Relaciones de Anidación/Composición (PlantUML: +.. | Mermaid: *--)
-    ' ProductAdapter +.. ProductAdapter$ProductViewHolder
+    %% Relaciones de Anidación/Composición (Mermaid: *--)
     ProductAdapter *-- ProductAdapter$ProductViewHolder
-    ' OrdersAdapter +.. OrdersAdapter$OrderViewHolder
     OrdersAdapter *-- OrdersAdapter$OrderViewHolder
-    ' CartAdapter +.. CartAdapter$CartViewHolder
     CartAdapter *-- CartAdapter$CartViewHolder
 
     %% Relaciones de Interfaces (Implementación)
@@ -229,7 +224,6 @@ classDiagram
     OrderDao <|.. AppDatabase
     
     %% Relaciones de Dependencia Lógica (Asociación)
-    ' Añadir las relaciones lógicas entre los componentes principales
     Repository --> AppDatabase
     CartActivity --> Repository
     LoginActivity --> FirebaseAuthManager
