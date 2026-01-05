@@ -4,12 +4,12 @@ public class Incident {
 
     private String userEmail;
     private String message;
-    private long timestamp;
+    private boolean resolved;
 
-    public Incident(String userEmail, String message, long timestamp) {
+    public Incident(String userEmail, String message, long l) {
         this.userEmail = userEmail;
         this.message = message;
-        this.timestamp = timestamp;
+        this.resolved = false;
     }
 
     public String getUserEmail() {
@@ -20,7 +20,11 @@ public class Incident {
         return message;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public boolean isResolved() {
+        return resolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
 }

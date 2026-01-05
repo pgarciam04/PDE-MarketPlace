@@ -4,20 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pde_marketplace.R;
+import com.example.pde_marketplace.data.IncidentRepository;
 import com.example.pde_marketplace.model.Incident;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class IncidentAdapter extends RecyclerView.Adapter<IncidentAdapter.IncidentViewHolder> {
+public class IncidentAdapter extends RecyclerView.Adapter<IncidentAdapter.ViewHolder> {
 
     private final Context context;
     private final List<Incident> incidents;
@@ -29,25 +28,39 @@ public class IncidentAdapter extends RecyclerView.Adapter<IncidentAdapter.Incide
 
     @NonNull
     @Override
-    public IncidentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_incident, parent, false);
-        return new IncidentViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull IncidentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Incident incident = incidents.get(position);
 
         holder.tvUser.setText("Usuario: " + incident.getUserEmail());
         holder.tvMessage.setText(incident.getMessage());
 
-        String date = new SimpleDateFormat(
-                "dd/MM/yyyy HH:mm",
-                Locale.getDefault()
-        ).format(new Date(incident.getTimestamp()));
+        if (incident.isResolved()) {
+            holder.tvStatus.setText("RESUELTA");
+            holder.tvStatus.setTextColor(context.getColor(android.R.color.holo_green_dark));
+            holder.btnResolve.setEnabled(false);
+        } else {
+            holder.tvStatus.setText("PENDIENTE");
+            holder.tvStatus.setTextColor(context.getColor(android.R.color.holo_red_dark));
+            holder.btnResolve.setEnabled(true);
+        }
 
-        holder.tvDate.setText(date);
+        holder.btnResolve.setOnClickListener(v -> {
+            IncidentRepository.markResolved(position);
+            notifyItemChanged(position);
+        });
+
+        holder.btnDelete.setOnClickListener(v -> {
+            IncidentRepository.removeIncident(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, incidents.size());
+        });
     }
 
     @Override
@@ -55,15 +68,18 @@ public class IncidentAdapter extends RecyclerView.Adapter<IncidentAdapter.Incide
         return incidents.size();
     }
 
-    static class IncidentViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvUser, tvMessage, tvDate;
+        TextView tvUser, tvMessage, tvStatus;
+        Button btnResolve, btnDelete;
 
-        public IncidentViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUser = itemView.findViewById(R.id.tvIncidentUser);
             tvMessage = itemView.findViewById(R.id.tvIncidentMessage);
-            tvDate = itemView.findViewById(R.id.tvIncidentDate);
+            tvStatus = itemView.findViewById(R.id.tvIncidentStatus);
+            btnResolve = itemView.findViewById(R.id.btnResolve);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 }

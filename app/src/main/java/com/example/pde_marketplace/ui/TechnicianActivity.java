@@ -3,7 +3,6 @@ package com.example.pde_marketplace.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,14 +30,22 @@ public class TechnicianActivity extends AppCompatActivity {
         Button btnProfile = findViewById(R.id.btnTechProfile);
         Button btnIncidents = findViewById(R.id.btnTechIncidents);
 
-        // PERFIL (más adelante)
-        btnProfile.setOnClickListener(v ->
-                Toast.makeText(this, "Perfil técnico (pendiente)", Toast.LENGTH_SHORT).show()
-        );
+        // 🔹 PERFIL TÉCNICO (YA FUNCIONA)
+        btnProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    TechnicianActivity.this,
+                    TechnicianProfileActivity.class
+            );
+            startActivity(intent);
+        });
 
-        // INCIDENCIAS
-        btnIncidents.setOnClickListener(v ->
-                startActivity(new Intent(this, TechnicianIncidentsActivity.class))
-        );
+        // 🔹 INCIDENCIAS
+        btnIncidents.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    TechnicianActivity.this,
+                    TechnicianIncidentsActivity.class
+            );
+            startActivity(intent);
+        });
     }
 }

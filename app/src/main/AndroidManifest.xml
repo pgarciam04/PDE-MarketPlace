@@ -27,6 +27,7 @@
         <activity android:name=".ui.TechnicianActivity" />
         <activity android:name=".ui.CreateProductActivity" />
         <activity android:name=".ui.TechnicianIncidentsActivity" />
+        <activity android:name=".ui.TechnicianProfileActivity" />
 
 
 

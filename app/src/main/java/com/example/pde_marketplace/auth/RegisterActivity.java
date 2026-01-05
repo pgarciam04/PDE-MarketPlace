@@ -1,7 +1,6 @@
 package com.example.pde_marketplace.auth;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +11,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pde_marketplace.R;
+import com.example.pde_marketplace.data.UserRepository;
+import com.example.pde_marketplace.model.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -60,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            // Validación dominio email
             boolean validDomain = false;
             for (String domain : ALLOWED_DOMAINS) {
                 if (email.endsWith(domain)) {
@@ -70,12 +72,13 @@ public class RegisterActivity extends AppCompatActivity {
             if (!validDomain) {
                 Toast.makeText(
                         this,
-                        "El correo debe ser gmail, hotmail, outlook o yahoo",
+                        "Correo no permitido",
                         Toast.LENGTH_LONG
                 ).show();
                 return;
             }
 
+            // Validación nombre (solo letras y espacios)
             if (!name.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
                 Toast.makeText(
                         this,
@@ -85,27 +88,18 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
+            // Validación teléfono (exactamente 9 números)
             if (!phone.matches("^\\d{9}$")) {
                 Toast.makeText(
                         this,
-                        "El teléfono debe tener 9 números y sin letras",
+                        "El teléfono debe tener 9 números",
                         Toast.LENGTH_LONG
                 ).show();
                 return;
             }
 
             // =========================
-            // GUARDAR PERFIL LOCAL
-            // =========================
-            SharedPreferences prefs = getSharedPreferences("user_profile", MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("name", name);
-            editor.putString("phone", phone);
-            editor.putString("address", address);
-            editor.apply();
-
-            // =========================
-            // REGISTRO
+            // REGISTRO FIREBASE
             // =========================
             authManager.registerUser(
                     email,
@@ -116,12 +110,22 @@ public class RegisterActivity extends AppCompatActivity {
                     RegisterActivity.this
             );
 
+            // =========================
+            // GUARDAR USUARIO EN REPOSITORIO
+            // =========================
+            UserRepository.saveUser(
+                    RegisterActivity.this,
+                    new User(email, name, phone, address)
+            );
+
+
             Toast.makeText(
                     this,
                     "Cuenta registrada correctamente",
                     Toast.LENGTH_SHORT
             ).show();
 
+            // Volver al login tras 0.5s
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
