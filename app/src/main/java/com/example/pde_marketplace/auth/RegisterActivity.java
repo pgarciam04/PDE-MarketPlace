@@ -1,6 +1,7 @@
 package com.example.pde_marketplace.auth;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
             "@gmail.com",
             "@hotmail.com",
             "@outlook.es",
-            "@yahoo.es" ,
+            "@yahoo.es",
             "@tecnico.com"
     };
 
@@ -53,14 +54,12 @@ public class RegisterActivity extends AppCompatActivity {
             // VALIDACIONES
             // =========================
 
-            // Campos vacíos
             if (email.isEmpty() || password.isEmpty()
                     || name.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Validación correo (dominios)
             boolean validDomain = false;
             for (String domain : ALLOWED_DOMAINS) {
                 if (email.endsWith(domain)) {
@@ -77,7 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Validación nombre (solo letras y espacios)
             if (!name.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) {
                 Toast.makeText(
                         this,
@@ -87,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
                 return;
             }
 
-            // Validación teléfono (solo números y máx. 9)
             if (!phone.matches("^\\d{9}$")) {
                 Toast.makeText(
                         this,
@@ -96,6 +93,16 @@ public class RegisterActivity extends AppCompatActivity {
                 ).show();
                 return;
             }
+
+            // =========================
+            // GUARDAR PERFIL LOCAL
+            // =========================
+            SharedPreferences prefs = getSharedPreferences("user_profile", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("name", name);
+            editor.putString("phone", phone);
+            editor.putString("address", address);
+            editor.apply();
 
             // =========================
             // REGISTRO

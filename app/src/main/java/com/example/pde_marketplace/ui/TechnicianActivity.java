@@ -2,6 +2,8 @@ package com.example.pde_marketplace.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +17,6 @@ import java.util.List;
 
 public class TechnicianActivity extends AppCompatActivity {
 
-    private ProductAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,17 +26,19 @@ public class TechnicianActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Product> productList = ProductRepository.getProducts();
-        adapter = new ProductAdapter(this, productList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(new ProductAdapter(this, productList));
 
-        findViewById(R.id.btnAddProduct).setOnClickListener(v -> {
-            startActivity(new Intent(this, CreateProductActivity.class));
-        });
-    }
+        Button btnProfile = findViewById(R.id.btnTechProfile);
+        Button btnIncidents = findViewById(R.id.btnTechIncidents);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        adapter.notifyDataSetChanged(); // 🔥 refresca catálogo
+        // PERFIL (más adelante)
+        btnProfile.setOnClickListener(v ->
+                Toast.makeText(this, "Perfil técnico (pendiente)", Toast.LENGTH_SHORT).show()
+        );
+
+        // INCIDENCIAS
+        btnIncidents.setOnClickListener(v ->
+                startActivity(new Intent(this, TechnicianIncidentsActivity.class))
+        );
     }
 }

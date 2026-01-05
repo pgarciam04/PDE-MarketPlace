@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Encabezado -->
+    <!-- ========================= -->
+    <!-- ENCABEZADO -->
+    <!-- ========================= -->
     <TextView
         android:id="@+id/tvTitleTech"
         android:text="Catálogo de productos (TÉCNICO)"
@@ -17,7 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Botón crear producto -->
+    <!-- ========================= -->
+    <!-- BOTÓN CREAR PRODUCTO -->
+    <!-- ========================= -->
     <Button
         android:id="@+id/btnAddProduct"
         android:text="Crear producto"
@@ -25,11 +29,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Lista de productos -->
+    <!-- ========================= -->
+    <!-- LISTA DE PRODUCTOS -->
+    <!-- ========================= -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerProductsTech"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <!-- ========================= -->
+    <!-- BARRA INFERIOR DE BOTONES -->
+    <!-- ========================= -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- PERFIL (izquierda) -->
+        <Button
+            android:id="@+id/btnTechProfile"
+            android:text="Perfil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!-- INCIDENCIAS (derecha) -->
+        <Button
+            android:id="@+id/btnTechIncidents"
+            android:text="Incidencias"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
 
 </LinearLayout>
