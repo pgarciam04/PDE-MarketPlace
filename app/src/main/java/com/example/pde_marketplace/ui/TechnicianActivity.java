@@ -1,5 +1,6 @@
 package com.example.pde_marketplace.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import java.util.List;
 
 public class TechnicianActivity extends AppCompatActivity {
 
+    private ProductAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,9 +25,18 @@ public class TechnicianActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerProductsTech);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // 🔹 MISMO catálogo que el usuario
         List<Product> productList = ProductRepository.getProducts();
+        adapter = new ProductAdapter(this, productList);
+        recyclerView.setAdapter(adapter);
 
-        recyclerView.setAdapter(new ProductAdapter(this, productList));
+        findViewById(R.id.btnAddProduct).setOnClickListener(v -> {
+            startActivity(new Intent(this, CreateProductActivity.class));
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged(); // 🔥 refresca catálogo
     }
 }

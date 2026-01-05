@@ -25,6 +25,8 @@
         <activity android:name=".ui.OrdersActivity" />
         <activity android:name=".ui.AccountActivity" />
         <activity android:name=".ui.TechnicianActivity" />
+        <activity android:name=".ui.CreateProductActivity" />
+
 
     </application>
 

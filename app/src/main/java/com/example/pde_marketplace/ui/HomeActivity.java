@@ -26,37 +26,53 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // RecyclerView
         recyclerView = findViewById(R.id.recyclerProducts);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // 🔹 Catálogo unificado
+        // 🔹 Catálogo compartido
         productList = ProductRepository.getProducts();
-
         adapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(adapter);
 
+        // 🛒 Carrito
         FloatingActionButton btnCart = findViewById(R.id.btnCart);
         btnCart.setOnClickListener(v ->
                 startActivity(new Intent(this, CartActivity.class)));
 
+        // 👤 Cuenta
         FloatingActionButton btnAccount = findViewById(R.id.btnAccount);
         btnAccount.setOnClickListener(v ->
                 startActivity(new Intent(this, AccountActivity.class)));
 
+        // 🧾 Pedidos
         FloatingActionButton btnOrders = findViewById(R.id.btnOrders);
         btnOrders.setOnClickListener(v ->
                 startActivity(new Intent(this, OrdersActivity.class)));
 
+        // 🔍 Búsqueda
         SearchView searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override public boolean onQueryTextSubmit(String query) {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
                 adapter.filter(query);
                 return false;
             }
-            @Override public boolean onQueryTextChange(String newText) {
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
                 adapter.filter(newText);
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 🔄 Refresca catálogo por si el técnico añadió productos
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 }
