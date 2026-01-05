@@ -14,22 +14,17 @@ import java.util.List;
 
 public class TechnicianActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private ProductAdapter adapter;
-    private List<Product> productList;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_technician);
 
-        recyclerView = findViewById(R.id.recyclerProductsTech);
+        RecyclerView recyclerView = findViewById(R.id.recyclerProductsTech);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // 🔹 MISMA FUENTE DE DATOS QUE EL USUARIO
-        productList = ProductRepository.getProducts();
+        // 🔹 MISMO catálogo que el usuario
+        List<Product> productList = ProductRepository.getProducts();
 
-        adapter = new ProductAdapter(this, productList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(new ProductAdapter(this, productList));
     }
 }
