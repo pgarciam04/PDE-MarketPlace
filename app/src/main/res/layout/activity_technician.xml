@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ========================= -->
+    <!-- ENCABEZADO -->
+    <!-- ========================= -->
+    <TextView
+        android:id="@+id/tvTitleTech"
+        android:text="Catálogo de productos (TÉCNICO)"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="#8000FF"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- ========================= -->
+    <!-- BOTÓN CREAR PRODUCTO -->
+    <!-- ========================= -->
+    <Button
+        android:id="@+id/btnAddProduct"
+        android:text="Crear producto"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- ========================= -->
+    <!-- LISTA DE PRODUCTOS -->
+    <!-- ========================= -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerProductsTech"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- ========================= -->
+    <!-- BARRA INFERIOR DE BOTONES -->
+    <!-- ========================= -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- PERFIL (izquierda) -->
+        <Button
+            android:id="@+id/btnTechProfile"
+            android:text="Perfil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <!-- INCIDENCIAS (derecha) -->
+        <Button
+            android:id="@+id/btnTechIncidents"
+            android:text="Incidencias"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+</LinearLayout>

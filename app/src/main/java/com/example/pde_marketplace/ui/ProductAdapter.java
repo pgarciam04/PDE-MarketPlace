@@ -20,13 +20,15 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private Context context;
-    private List<Product> productList;   // lista actual mostrada
-    private List<Product> fullList;      // copia completa para filtrar
+    private List<Product> productList;   // lista visible
+    private List<Product> fullList;      // copia completa (para filtro)
+    private boolean isTechnician;
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    public ProductAdapter(Context context, List<Product> productList, boolean isTechnician) {
         this.context = context;
         this.productList = productList;
-        this.fullList = new ArrayList<>(productList); // 🔹 guarda la lista original
+        this.fullList = new ArrayList<>(productList);
+        this.isTechnician = isTechnician;
     }
 
     @NonNull
@@ -39,18 +41,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
+
         holder.tvName.setText(product.getName());
         holder.tvDesc.setText(product.getDescription());
-        holder.tvPrice.setText("€" + product.getPrice());
+        holder.tvPrice.setText("€" + String.format("%.2f", product.getPrice()));
         holder.ivImage.setImageResource(product.getImageResId());
 
-        // Evento: al hacer clic, ir al detalle
+        // 👉 CLICK EN PRODUCTO (usuario y técnico)
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ProductDetailActivity.class);
             intent.putExtra("name", product.getName());
             intent.putExtra("desc", product.getDescription());
             intent.putExtra("price", product.getPrice());
             intent.putExtra("imageResId", product.getImageResId());
+
+            // 🔑 CLAVE: pasar la posición REAL del producto
+            intent.putExtra("productId", product.getId());
+
+
             context.startActivity(intent);
         });
     }
@@ -60,7 +68,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return productList.size();
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+    // 🔍 FILTRO DE BÚSQUEDA (no se toca)
+    public void filter(String text) {
+        productList.clear();
+
+        if (text == null || text.trim().isEmpty()) {
+            productList.addAll(fullList);
+        } else {
+            String query = text.toLowerCase().trim();
+            for (Product p : fullList) {
+                if (p.getName().toLowerCase().contains(query)
+                        || p.getDescription().toLowerCase().contains(query)) {
+                    productList.add(p);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    static class ProductViewHolder extends RecyclerView.ViewHolder {
+
         ImageView ivImage;
         TextView tvName, tvDesc, tvPrice;
 
@@ -71,27 +98,5 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             tvDesc = itemView.findViewById(R.id.tvProductDesc);
             tvPrice = itemView.findViewById(R.id.tvProductPrice);
         }
-    }
-
-    // 🔍 Método de filtrado
-    public void filter(String text) {
-        List<Product> filteredList = new ArrayList<>();
-
-        if (text == null || text.isEmpty()) {
-            // Si no se escribe nada, mostrar todos
-            filteredList.addAll(fullList);
-        } else {
-            String query = text.toLowerCase().trim();
-            for (Product product : fullList) {
-                if (product.getName().toLowerCase().contains(query)
-                        || product.getDescription().toLowerCase().contains(query)) {
-                    filteredList.add(product);
-                }
-            }
-        }
-
-        productList.clear();
-        productList.addAll(filteredList);
-        notifyDataSetChanged();
     }
 }

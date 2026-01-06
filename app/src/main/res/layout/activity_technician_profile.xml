@@ -1,12 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="24dp"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!-- ========================= -->
-    <!-- PARTE SUPERIOR: DATOS USUARIO -->
-    <!-- ========================= -->
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@+id/tvEmail"
@@ -43,39 +41,6 @@
         android:text="Cerrar sesión"
         android:backgroundTint="#8000FF"
         android:textColor="@android:color/white"
-        android:layout_marginBottom="24dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!-- Espaciador para empujar el mensaje abajo -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <!-- ========================= -->
-    <!-- PARTE INFERIOR: MENSAJE -->
-    <!-- ========================= -->
-
-    <TextView
-        android:text="Enviar mensaje al soporte"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:id="@+id/etUserMessage"
-        android:hint="Escribe tu mensaje aquí..."
-        android:minLines="3"
-        android:gravity="top"
-        android:layout_marginBottom="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btnSendMessage"
-        android:text="Enviar mensaje"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

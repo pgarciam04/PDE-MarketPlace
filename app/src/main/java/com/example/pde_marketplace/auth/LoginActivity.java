@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pde_marketplace.R;
 import com.example.pde_marketplace.ui.HomeActivity;
+import com.example.pde_marketplace.ui.TechnicianActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,17 +32,25 @@ public class LoginActivity extends AppCompatActivity {
         tvRegisterLink = findViewById(R.id.tvRegisterLink);
 
         btnLogin.setOnClickListener(v -> {
+
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
-            if (!email.isEmpty() && !password.isEmpty()) {
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                authManager.loginUser(email, password, LoginActivity.this, intent);
+            if (email.isEmpty() || password.isEmpty()) return;
+
+            // 🔀 DECISIÓN DE VISTA SEGÚN EMAIL
+            Intent nextIntent;
+            if (email.endsWith("@tecnico.com")) {
+                nextIntent = new Intent(this, TechnicianActivity.class);
+            } else {
+                nextIntent = new Intent(this, HomeActivity.class);
             }
+
+            authManager.loginUser(email, password, this, nextIntent);
         });
 
-        tvRegisterLink.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-        });
+        tvRegisterLink.setOnClickListener(v ->
+                startActivity(new Intent(this, RegisterActivity.class))
+        );
     }
 }
