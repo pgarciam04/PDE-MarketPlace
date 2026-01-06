@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // 🔹 Catálogo compartido
         productList = ProductRepository.getProducts();
-        adapter = new ProductAdapter(this, productList);
+        adapter = new ProductAdapter(this, productList, false);
         recyclerView.setAdapter(adapter);
 
         // 🛒 Carrito

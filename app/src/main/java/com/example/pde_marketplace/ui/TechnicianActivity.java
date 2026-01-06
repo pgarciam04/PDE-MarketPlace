@@ -16,36 +16,55 @@ import java.util.List;
 
 public class TechnicianActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private Button btnAddProduct, btnProfile, btnIncidents;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_technician);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerProductsTech);
+        // 📦 RecyclerView catálogo
+        recyclerView = findViewById(R.id.recyclerProductsTech);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Product> productList = ProductRepository.getProducts();
-        recyclerView.setAdapter(new ProductAdapter(this, productList));
+        ProductAdapter adapter = new ProductAdapter(this, productList, true);
+        recyclerView.setAdapter(adapter);
 
-        Button btnProfile = findViewById(R.id.btnTechProfile);
-        Button btnIncidents = findViewById(R.id.btnTechIncidents);
+        // ➕ Crear producto
+        btnAddProduct = findViewById(R.id.btnAddProduct);
+        btnAddProduct.setOnClickListener(v -> {
+            startActivity(new Intent(
+                    TechnicianActivity.this,
+                    CreateProductActivity.class
+            ));
+        });
 
-        // 🔹 PERFIL TÉCNICO (YA FUNCIONA)
+        // 👤 Perfil técnico
+        btnProfile = findViewById(R.id.btnTechProfile);
         btnProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(
+            startActivity(new Intent(
                     TechnicianActivity.this,
                     TechnicianProfileActivity.class
-            );
-            startActivity(intent);
+            ));
         });
 
-        // 🔹 INCIDENCIAS
+        // 🚨 Incidencias
+        btnIncidents = findViewById(R.id.btnTechIncidents);
         btnIncidents.setOnClickListener(v -> {
-            Intent intent = new Intent(
+            startActivity(new Intent(
                     TechnicianActivity.this,
                     TechnicianIncidentsActivity.class
-            );
-            startActivity(intent);
+            ));
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (recyclerView.getAdapter() != null) {
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 }
